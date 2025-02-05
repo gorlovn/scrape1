@@ -16,7 +16,7 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
 ```
 
-### Установка в WIndows зависимостей с использованием pip
+### Установка в Windows зависимостей с использованием pip
 
 Установка rust: https://www.rust-lang.org/tools/install
 

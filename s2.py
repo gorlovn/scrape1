@@ -31,9 +31,8 @@ def check_ollama_connection(model_name: str = "llama3") -> bool:
         return False
 
 def save_results(_data: List[Dict], 
-                 _filename: str = "pizza_prices.json",
-                 _fieldname: str = "пиццы") -> None:
-    """Сохраняет результаты в JSON файл"""
+                 _filename: str = "pizza_prices.json") -> None:
+    """Сохраняет результаты в JSON и CSV файлы"""
     try:
         with open(_filename, 'w', encoding='utf-8') as f:
             json.dump(_data, f, ensure_ascii=False, indent=4)
@@ -44,7 +43,8 @@ def save_results(_data: List[Dict],
     
     try:
         _csv_filename = _filename.replace('.json', '.csv')
-        _df = pd.json_normalize(_data[0][_fieldname])
+        _first_value = next(iter(_data[0].values()))
+        _df = pd.DataFrame(_first_value)
         _df.to_csv(_csv_filename, index=False)
         logger.info(f"Результаты сохранены в {_csv_filename}")
     except Exception as e:
@@ -53,8 +53,7 @@ def save_results(_data: List[Dict],
     
 
 def main(_endpoint="picca", 
-         _key_word="пиццы", 
-         _field_name = "пиццы",
+         _key_word="пиццы",
          _base_uri="https://chicago-pizza.ru/catalog/"):
     # Проверка подключения к Ollama
     if not check_ollama_connection("llama3.2"):
@@ -102,7 +101,6 @@ def main(_endpoint="picca",
 
         # Сохранение результатов
         save_results(result if isinstance(result, list) else [result],
-                     _fieldname=_field_name,
                      _filename = f"{_endpoint}_prices.json")
         
         # Вывод результатов
@@ -117,13 +115,10 @@ if __name__ == "__main__":
     
     endpoint = 'picca'
     key_word = 'пиццы'
-    fieldname = 'пиццы'
     nn = len(sys.argv)
     if nn > 1:
         endpoint = sys.argv[1]
         if nn > 2:
             key_word = sys.argv[2]
-            if nn > 3:
-                fieldname = sys.argv[3]
     
-    main(endpoint, key_word, fieldname)
+    main(endpoint, key_word)
