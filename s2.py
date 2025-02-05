@@ -53,18 +53,22 @@ def save_results(_data: List[Dict],
     
 
 def main(_endpoint="picca", 
-         _key_word="пиццы",
-         _base_uri="https://chicago-pizza.ru/catalog/"):
+         _key_word="позиции прайса",
+         _base_uri="https://chicago-pizza.ru/catalog/",
+         _model="llama3.2"):
+
+    _src_uri = _base_uri + _endpoint
+    logger.info(f"******** Parsing {_src_uri} using model {_model}")
     # Проверка подключения к Ollama
-    if not check_ollama_connection("llama3.2"):
+    if not check_ollama_connection(_model):
         logger.error("Ollama сервер недоступен или модель не найдена")
         return
 
-    _src_uri = _base_uri + _endpoint
     # Конфигурация скрейпера
+    _mf_name = f"ollama/{_model}"
     graph_config = {
         "llm": {
-            "model": "ollama/llama3.2",
+            "model": _mf_name,
             "temperature": 0.1,
             "model_tokens": 8192
         },
@@ -115,10 +119,13 @@ if __name__ == "__main__":
     
     endpoint = 'picca'
     key_word = 'позиции прайса'
+    model = 'llama3.2'
     nn = len(sys.argv)
     if nn > 1:
         endpoint = sys.argv[1]
         if nn > 2:
-            key_word = sys.argv[2]
+            model = sys.argv[2]
+            if nn > 3:
+                key_word = sys.argv[3]
     
-    main(endpoint, key_word)
+    main(endpoint, key_word, _model=model)

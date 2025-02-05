@@ -49,3 +49,21 @@ ollama pull llama3.2
 .venv\Scripts\activate.bat
 python s2.py seti
 ```
+
+Вторым аргументом можно задать название модели.
+Предварительно модель нужно загрузить на компьютер:
+```shell
+ollama pull model
+```
+По умолчанию используется модель `llama3.2`.
+
+Список доступных моделей смотреть здесь: https://ollama.com/library
+
+Список локально загруженных моделей:
+```shell
+ollama list
+```
+Удалить загруженную модель:
+```shell
+ollama rm model
+```
