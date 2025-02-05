@@ -12,6 +12,7 @@ wheels/
 # Data files
 *.json
 *.csv
+*.xlsx
 
 # Log files
 *.log

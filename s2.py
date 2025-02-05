@@ -32,7 +32,7 @@ def check_ollama_connection(model_name: str = "llama3") -> bool:
 
 def save_results(_data: List[Dict], 
                  _filename: str = "pizza_prices.json") -> None:
-    """Сохраняет результаты в JSON и CSV файлы"""
+    """Сохраняет результаты в JSON и XLSX файлы"""
     try:
         with open(_filename, 'w', encoding='utf-8') as f:
             json.dump(_data, f, ensure_ascii=False, indent=4)
@@ -42,11 +42,11 @@ def save_results(_data: List[Dict],
         return False
     
     try:
-        _csv_filename = _filename.replace('.json', '.csv')
+        _xlsx_filename = _filename.replace('.json', '.xlsx')
         _first_value = next(iter(_data[0].values()))
         _df = pd.DataFrame(_first_value)
-        _df.to_csv(_csv_filename, index=False)
-        logger.info(f"Результаты сохранены в {_csv_filename}")
+        _df.to_excel(_xlsx_filename, index=False)
+        logger.info(f"Результаты сохранены в {_xlsx_filename}")
     except Exception as e:
         logger.error(f"Ошибка при формировании и сохранении datafame: {str(e)}")
         return False
@@ -114,7 +114,7 @@ if __name__ == "__main__":
     import sys
     
     endpoint = 'picca'
-    key_word = 'пиццы'
+    key_word = 'позиции прайса'
     nn = len(sys.argv)
     if nn > 1:
         endpoint = sys.argv[1]

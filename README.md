@@ -28,6 +28,7 @@ python -m venv .venv
 pip install scrapegraphai
 pip install requests
 pip install pandas
+pip install openpyxl
 playwright install
 ```
 
@@ -39,4 +40,12 @@ playwright install
 После установки фреймворка необходимо скачать языковую модель:
 ```shell
 ollama pull llama3.2
+```
+
+## Запуск в Windows
+В командной строке (`cmd`) в папке с проектом
+
+```shell
+.venv\Scripts\activate.bat
+python s2.py seti
 ```
