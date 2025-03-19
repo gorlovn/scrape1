@@ -82,7 +82,7 @@ if response.status_code == 200:
                     logger.warning(f'Не найден дочерний элемент с ценой: {_class_name}')
                     continue  # Пропускаем эту карточку, если цена не найдена
             else:
-                logger.warning(f'Не найден контейнер с ценой')
+                logger.warning(f'Не найден контейнер с ценой: {_class_name}')
                 continue  # Пропускаем эту карточку, если цена не найдена            
             
             _list.append({'Название': name, 'Цена': price})
